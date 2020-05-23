@@ -16,8 +16,7 @@ intermediate_directory = '/Users/ahamedfofana/PycharmProjects/untitled15/Interme
 def sample_simulator(file):
     with open(review_txt_filepath, encoding='utf_8') as f:
         sample_review = list(it.islice(f, 8, 9))[0]
-        for values in sample_review:
-            
+
         sample_review = sample_review.replace('\\n', '\n')
         print(sample_review)
 
@@ -88,34 +87,31 @@ def resturantReviews(file):
     # df.loc[:, 'stop?':'out of vocab.?'] = (df.loc[:, 'stop?':'out of vocab.?']
     #                                        .applymap(lambda x: u'Yes' if x else u''))
 
-    def punct_space(token):
-        return token.is_punct or token.is_space
+def punct_space(token):
+    return token.is_punct or token.is_space
 
-    def line_review(filename):
+def line_review(filename):
 
-        with open(filename, encoding='utf_8') as f:
-            for review in f:
-                yield review.replace('\\n', '\n')
+    with open(filename, encoding='utf_8') as f:
+        for review in f:
+            yield review.replace('\\n', '\n')
 
-    def lemmatized_sentence_corpus(filename):
+def lemmatized_sentence_corpus(filename):
 
-        for parsed_review in nlp.pipe(line_review(filename), batch_size=10000, n_threads=4):
+    for parsed_review in nlp.pipe(line_review(filename), batch_size=10000, n_threads=4):
 
-            for sent in parsed_review.sents:
-                yield u' '.join([token.lemma_ for token in sent if not punct_space(token)])
-
-
-    unigram_sentences_filepath = intermediate_directory + 'unigram_sentences_all.txt'
+        for sent in parsed_review.sents:
+            yield u' '.join([token.lemma_ for token in sent if not punct_space(token)])
 
 
-    with open(unigram_sentences_filepath, 'w', encoding='utf_8') as f:
-        for sentence in lemmatized_sentence_corpus(("/Users/ahamedfofana/PycharmProjects/untitled15/writing_file")):
-            f.write(sentence + '\n')
+unigram_sentences_filepath = intermediate_directory + 'unigram_sentences_all.txt'
 
-    unigram_sentences = LineSentence(unigram_sentences_filepath)
 
-    for sentence in unigram_sentences:
-        print(sentence)
+with open(unigram_sentences_filepath, 'w', encoding='utf_8') as f:
+    for sentence in lemmatized_sentence_corpus(("/Users/ahamedfofana/PycharmProjects/untitled15/writing_file")):
+        f.write(sentence + '\n')
+
+unigram_sentences = LineSentence(unigram_sentences_filepath)
 
 
 
@@ -123,3 +119,6 @@ def resturantReviews(file):
 
 if __name__ == '__main__':
     sample_simulator(review_txt_filepath)
+    for sentence in it.islice(unigram_sentences, 1, 6):
+        print(u' '.join(sentence))
+        print(u' ')
