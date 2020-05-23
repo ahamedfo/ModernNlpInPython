@@ -7,11 +7,19 @@ import spacy
 from gensim.models import Phrases
 from gensim.models.word2vec import LineSentence
 
+nlp = spacy.load('en')
 
 businesses_filepath = "/Users/ahamedfofana/PycharmProjects/Modern NLP IN Python/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json"
 review_txt_filepath = "/Users/ahamedfofana/PycharmProjects/Modern NLP IN Python/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json"
 intermediate_directory = '/Users/ahamedfofana/PycharmProjects/untitled15/Intermediate'
 
+def sample_simulator(file):
+    with open(review_txt_filepath, encoding='utf_8') as f:
+        sample_review = list(it.islice(f, 8, 9))[0]
+        for values in sample_review:
+            
+        sample_review = sample_review.replace('\\n', '\n')
+        print(sample_review)
 
 def number_restaurants(file):
     ############################
@@ -39,13 +47,6 @@ def resturantReviews(file):
                 pass
         print( u'Text from {:,} restaurants reviews in the txt file.'.format(review_count + 1))
 
-
-
-
-
-
-if __name__ == '__main__':
-    nlp = spacy.load('en')
     # with open('/Users/ahamedfofana/PycharmProjects/untitled15/writing_file', "r",encoding='utf_8') as f:
     #     data = f.read()
     #     data = data.replace('\\n', '\n')
@@ -115,3 +116,10 @@ if __name__ == '__main__':
 
     for sentence in unigram_sentences:
         print(sentence)
+
+
+
+
+
+if __name__ == '__main__':
+    sample_simulator(review_txt_filepath)
