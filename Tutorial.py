@@ -113,12 +113,23 @@ with open(unigram_sentences_filepath, 'w', encoding='utf_8') as f:
 
 unigram_sentences = LineSentence(unigram_sentences_filepath)
 
+for sentence in it.islice(unigram_sentences, 1, 6):
+        print(u' '.join(sentence))
+        print(u' ')
+
+bigram_model_filepath = intermediate_directory + 'bigram_model_all'
+
+def link_twoWords(file):
+    bigram_model = Phrases(unigram_sentences)
+    bigram_model.save(bigram_model_filepath)
+    bigram_model = Phrases.load(bigram_model_filepath)
 
 
 
 
 if __name__ == '__main__':
-    sample_simulator(review_txt_filepath)
-    for sentence in it.islice(unigram_sentences, 1, 6):
-        print(u' '.join(sentence))
-        print(u' ')
+
+
+
+
+
